@@ -1,10 +1,47 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-  Flask Login Example
-</h1>
-<h2 class="subtitle">
-  Easy authentication and authorization in Flask.
-</h2>
+<div class="column is-8 is-offset-2">
+  <h3 class="title">Your tasks</h3>
+  <div class="box">
+  {% if tasks|length > 0 %}
+    <div class="column">
+      <table class="table is-fullwidth">
+      {% for task in tasks%}
+      <tr>
+        <form method="POST" action="/remove">
+            <td class="is-four-fifths">
+              {{ task.title }}
+            </td>
+          <td>
+            <button class="button is-primary is-pulled-right">Done!</button>
+          </td>
+            <input type="hidden" value={{ task.id }} name="task_id">
+        </form>
+      </div>
+      {% endfor %}
+      </table>
+      </div>
+    </tr>
+  {% else %}
+  Everything is done ;)
+  {% endif %}
+  </div>
+
+  <h3 class="title">Add task</h3>
+  <div class="box">
+    <form method="POST" action="/new">
+      <div class="field is-horizontal has-addons ">
+        <div class="control has-addons is-expanded">
+          <input class="input" type="text" placeholder="New task" name="task_title">
+        </div>
+      <div class="control">
+        <button class="button is-info">Submit</button>
+      </div>
+      </div>
+    </form>
+  </div>
+
+</div>
+
 {% endblock %}
